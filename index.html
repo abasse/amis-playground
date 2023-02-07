@@ -11,11 +11,11 @@
     <script src="./sdk/sdk.js"></script>
 
     <style>
-        body{
+        body {
             margin: 0px;
             padding: 0px;
         }
-  
+
         .topnav {
             background-color: #333;
             overflow: hidden;
@@ -32,23 +32,27 @@
             font-size: 17px;
         }
 
-      
+
 
         .topnav a.active {
             color: white;
         }
 
+        .container {
+  display: flex; /* or inline-flex */
+}
+
         .app-wrapper {
             width: 50%;
             height: 100vh;
-            display:inline-block;
+            display: inline-block;
             border-right: 1px solid #d1d5db;
         }
 
         .playground-wrapper {
             width: 50%;
             height: 100%;
-            display:inline-block;
+            display: inline-block;
             height: 100vh;
             background-color: #edf1f2;
         }
@@ -61,18 +65,23 @@
     <div class="topnav">
         <a class="active" href="./">amis Playground</a>
     </div>
-    <div id="amisroot" class="app-wrapper"></div><div id="amisplayground" class="playground-wrapper"></div>
+    <div class="container">
+        <div id="amisroot" class="app-wrapper"></div>
+        <div id="amisplayground" class="playground-wrapper"></div>
+    </div>
+
 
 
     <script type="text/javascript">
         var currentsaveid = "";
         var amisScoped = undefined;
+        window.enableAMISDebug = true;
 
         (function () {
             let amis = amisRequire('amis/embed');
             let amisLib = amisRequire('amis');
 
-            let amisJSON = 
+            let amisJSON =
             {
                 "type": "page",
                 "name": "page",
@@ -82,51 +91,52 @@
                     "name": "form",
                     "wrapWithPanel": true,
                     "title": "amis JSON",
-                    "debug": false,
                     "controls": [
-                    
-                    {
-                        "type": "editor",
-                        "name": "editor",
-                        "label": "",
-                        "size": "xxl",
-                        "language": "json"
-                    }
+
+                        {
+                            "type": "editor",
+                            "name": "editor",
+                            "size": "xxl",
+                            "language": "json",
+                            "value": "{\"type\":\"page\", \"body\":\"Hello World!\"}"
+                        }
                     ],
                     "actions": [
-                    {
-                        "type":"tpl",
-                        "tpl":"Press ALT + RETURN to run."
-                    },
-                    {
-                        "type": "button",
-                        "actionType": "clear",
-                        "label": "Clear"
-                    },
-                    {
-                        "label": "Copy",
-                        "type": "button",
-                        "actionType": "copy",
-                        "content": "<%= data.editor %>"
-                    },
-                    {
-						"type": "button",
-						"label": "Run",
-                        "level": "primary",
-						"onClick": () => {
-                           run();
-						}
-					}
-                   
+                        {
+                            "type": "tpl",
+                            "tpl": "Press ALT + RETURN to run."
+                        },
+                        {
+                            "type": "button",
+                            "actionType": "clear",
+                            "label": "Clear"
+                        },
+                        {
+                            "label": "Copy",
+                            "type": "button",
+                            "actionType": "copy",
+                            "content": "<%= data.editor %>"
+                        },
+                        {
+                            "type": "button",
+                            "label": "Run",
+                            "level": "primary",
+                            "onClick": () => {
+                                run();
+                            }
+                        }
+
                     ]
-        
+
                 }
-                }
-            
-     
+            }
+
+
             amisScoped = amis.embed('#amisroot', amisJSON, {
                 locale: 'en-US'
             });
+
+
 
         })();
 
@@ -155,9 +165,8 @@
             if (!(e.keyCode == 13 && e.altKey)) return;
             run();
         });
+       
 
-
-        amisScoped.getComponentByName('page.form').setValues({ 'editor': '{"type":"page", "body":"Hello World!"}' });
     </script>
 
 
