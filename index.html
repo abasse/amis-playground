@@ -9,7 +9,7 @@
     <link rel="stylesheet" title="default" href="./sdk/sdk.css" />
     <link rel="stylesheet" href="./sdk/helper.css" />
     <script src="./sdk/sdk.js"></script>
-
+    <script src="./sdk/locale/de-DE.js"></script>
     <style>
         body {
             margin: 0px;
@@ -39,8 +39,9 @@
         }
 
         .container {
-  display: flex; /* or inline-flex */
-}
+            display: flex;
+            /* or inline-flex */
+        }
 
         .app-wrapper {
             width: 50%;
@@ -99,12 +100,36 @@
                             "size": "xxl",
                             "language": "json",
                             "value": "{\"type\":\"page\", \"body\":\"Hello World!\"}"
+                        },
+                        {
+                            "label": "Language",
+                            "type": "select",
+                            "name": "lang",
+                            "value": "en-US",
+                            "options": [
+                                {
+                                    "label": "Chinese",
+                                    "value": "zh-CN"
+                                },
+                                {
+                                    "label": "English",
+                                    "value": "en-US"
+                                },
+                                {
+                                    "label": "German",
+                                    "value": "de-DE"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "tpl",
+                            "tpl": "amis version 2.9.0"
                         }
                     ],
                     "actions": [
                         {
                             "type": "tpl",
-                            "tpl": "Press ALT + RETURN to run."
+                            "tpl": "Press ALT + RETURN to run "
                         },
                         {
                             "type": "button",
@@ -141,14 +166,15 @@
         })();
 
         function run() {
-            console.log('Running Playground...')
+            console.log('Running Playground...');   
             let amis = amisRequire('amis/embed');
             let amisLib = amisRequire('amis');
 
             let playgroundJSON = amisScoped.getComponentByName('page.form').getValues();
+     
             if (playgroundJSON.editor.length > 0) {
                 try {
-                    let amisScopedPlayground = amis.embed('#amisplayground', JSON.parse(playgroundJSON.editor));
+                    let amisScopedPlayground = amis.embed('#amisplayground', JSON.parse(playgroundJSON.editor), { locale: playgroundJSON.lang });
                 }
                 catch (err) {
                     amisLib.toast.error(err.message);
@@ -165,7 +191,7 @@
             if (!(e.keyCode == 13 && e.altKey)) return;
             run();
         });
-       
+
 
     </script>
 
