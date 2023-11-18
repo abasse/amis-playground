@@ -123,7 +123,7 @@
                         },
                         {
                             "type": "tpl",
-                            "tpl": "amis version 2.9.0"
+                            "tpl": "amis version 3.5.2"
                         }
                     ],
                     "actions": [
@@ -166,12 +166,12 @@
         })();
 
         function run() {
-            console.log('Running Playground...');   
+            console.log('Running Playground...');
             let amis = amisRequire('amis/embed');
             let amisLib = amisRequire('amis');
 
             let playgroundJSON = amisScoped.getComponentByName('page.form').getValues();
-     
+
             if (playgroundJSON.editor.length > 0) {
                 try {
                     let amisScopedPlayground = amis.embed('#amisplayground', JSON.parse(playgroundJSON.editor), { locale: playgroundJSON.lang });
